@@ -2,7 +2,7 @@
 {% block content %}
 	{% if 'spotify_id' in session %}
 		Hello {{ session.spotify_id }}.<br>
-		Click <a href="{{ url_for('analysis_redirect') }}">here</a> to view your library analysis.
+        Click <a href="{{ url_for('analysis_redirect') }}">here</a> to view your library analysis. <strong>NOTE:</strong> the first load may take a while. Please be patient.
 	{% else %}
 		Please <a href="{{ url_for('spotify.login') }}">authenticate with Spotify</a>.
 	{% endif %}

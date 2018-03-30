@@ -7,7 +7,10 @@ import sys
 import traceback
 
 try:
+    os.environ['SCRIPT_NAME'] = os.environ['SCRIPT_NAME'][:-len('app.cgi')]
+
     from app import app as application
+    
     if secret.DEBUG:
         from werkzeug.debug import DebuggedApplication
         application = DebuggedApplication(application, True)
