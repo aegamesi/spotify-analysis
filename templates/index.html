@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+	{% if 'spotify_id' in session %}
+		Hello {{ session.spotify_id }}.<br>
+		Click <a href="{{ url_for('analysis_redirect') }}">here</a> to view your library analysis.
+	{% else %}
+		Please <a href="{{ url_for('spotify.login') }}">authenticate with Spotify</a>.
+	{% endif %}
+
+	<p>
+		<strong>Privacy Info:</strong> The list of tracks in your Spotify library (and their analyses) will be stored.
+	</p>
+{% endblock %}

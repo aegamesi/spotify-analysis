@@ -1,4 +1,4 @@
-from flask import Flask, session, redirect, url_for, abort
+from flask import Flask, session, redirect, url_for, abort, render_template
 import flask_dance.contrib.spotify
 import json
 import secret
@@ -19,11 +19,6 @@ app.register_blueprint(blueprint, url_prefix='/login')
 
 def make_spotipy():
     return spotipy.Spotify(auth=flask_dance.contrib.spotify.spotify.token['access_token'])
-
-@app.route('/auth')
-def auth():
-    if not flask_dance.contrib.spotify.spotify.authorized:
-        return redirect(url_for('spotify.login'))
 
 @app.route('/go')
 def go():
@@ -80,16 +75,15 @@ def analysis(user_id, key):
     except FileNotFoundError:
         abort(404)
 
-    return '<pre>%s</pre>' % json.dumps(data, indent=4)
+    data['tracks'] = {t['track']['id']: t for t in data['tracks']}
+    return render_template('analysis.html', data=data)
 
 @app.route('/')
 def index():
-    if not flask_dance.contrib.spotify.spotify.authorized:
-        return 'Please <a href="%s">authenticate with Spotify</a>.' % url_for('spotify.login')
-    
-    if 'spotify_id' not in session:
+    if flask_dance.contrib.spotify.spotify.authorized and 'spotify_id' not in session:
         sp = make_spotipy()
         me = sp.current_user()
         session['spotify_id'] = me['id']
-    return 'Hi %s' % session['spotify_id']
+
+    return render_template('index.html')
 

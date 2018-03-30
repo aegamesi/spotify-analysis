@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block body %}
+	<p>Tracks: {{ data.tracks|length }}</p>
+
+	<table>
+		<tr>
+			<th>Song</th>
+			<th>Artist</th>
+
+			<th>Danceability</th>
+			<th>Energy</th>
+			<th>Speechiness</th>
+			<th>Acousticness</th>
+			<th>Instrumentalness</th>
+			<th>Liveness</th>
+			<th>Valence</th>
+
+			<th>Key</th>
+			<th>Mode</th>
+			<th>Loudness (dB)</th>
+			<th>Tempo (BPM)</th>
+		</tr>
+		{% for feature in data.audio_features %}
+		<tr>
+			<td><a href="{{ data.tracks[feature.id].track.external_urls.spotify }}">{{ data.tracks[feature.id].track.name }}</a></td>
+			<td>{{ data.tracks[feature.id].track.artists[0].name }}</td>
+
+			<td>{{ feature.danceability }}</td>
+			<td>{{ feature.energy }}</td>
+			<td>{{ feature.speechiness }}</td>
+			<td>{{ feature.acousticness }}</td>
+			<td>{{ feature.instrumentalness }}</td>
+			<td>{{ feature.liveness }}</td>
+			<td>{{ feature.valence }}</td>
+
+			<td>{{ ['C', 'C♯ / D♭', 'D', 'D♯ / E♭', 'E', 'F', 'F♯ / G♭', 'G', 'G♯ / A♭', 'A', 'A♯ / B♭', 'B'][feature.key] }}</td>
+			<td>{{ ['Min', 'Maj'][feature.mode] }}</td>
+			<td>{{ feature.loudness }}</td>
+			<td>{{ feature.tempo }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
