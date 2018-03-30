@@ -1,14 +1,18 @@
 from flask import Flask, session, redirect, url_for, abort, render_template
 import flask_dance.contrib.spotify
-import json
-import secret
+from flask_bootstrap import Bootstrap
+
 import spotipy
+import secret
+
+import json
 import string
 import random
 
 app = Flask(__name__)
 app.debug = secret.DEBUG
 app.secret_key = secret.SECRET_KEY
+Bootstrap(app)
 
 blueprint = flask_dance.contrib.spotify.make_spotify_blueprint(
     client_id=secret.SPOTIFY_CLIENT_ID,

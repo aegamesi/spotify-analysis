@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block body %}
+{% block content %}
 	{% if 'spotify_id' in session %}
 		Hello {{ session.spotify_id }}.<br>
 		Click <a href="{{ url_for('analysis_redirect') }}">here</a> to view your library analysis.
