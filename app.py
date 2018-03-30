@@ -9,7 +9,7 @@ import json
 import string
 import random
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 app.debug = secret.DEBUG
 app.secret_key = secret.SECRET_KEY
 Bootstrap(app)

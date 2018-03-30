@@ -1,10 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
 <div class="container">
-<p>Tracks: {{ data.tracks|length }}</p>
+<p>
+	Tracks: {{ data.tracks|length }}<br>
+	<a href="https://beta.developer.spotify.com/documentation/web-api/reference/tracks/get-audio-features/#audio-features-object">See here</a> for an explanation of what the columns mean.
+</p>
 
-<table class="table table-hover">
-	<tr>
+<table id="analysis" class="table table-hover tablesorter">
+	<thead><tr>
 		<th>Song</th>
 		<th>Artist</th>
 
@@ -20,7 +23,8 @@
 		<th>Mode</th>
 		<th>Loudness (dB)</th>
 		<th>Tempo (BPM)</th>
-	</tr>
+	</tr></thead>
+	<tbody>
 	{% for feature in data.audio_features %}
 	<tr>
 		<td><a href="{{ data.tracks[feature.id].track.external_urls.spotify }}">{{ data.tracks[feature.id].track.name }}</a></td>
@@ -40,6 +44,13 @@
 		<td>{{ feature.tempo|round(1) }}</td>
 	</tr>
 	{% endfor %}
+	</tbody>
 </table>
 </div>
+{% endblock %}
+
+{% block scripts %}
+	{{ super() }}
+	<script src="{{url_for('.static', filename='jquery.tablesorter.combined.min.js')}}"></script>
+	<script src="{{url_for('.static', filename='analysis.js')}}"></script>
 {% endblock %}
