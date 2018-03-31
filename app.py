@@ -49,7 +49,7 @@ def go():
         start += len(results)
 
     key = ''.join(random.SystemRandom().choice(string.hexdigits) for _ in range(32)).lower()
-    data = {'tracks': tracks, 'audio_features': audio_features, 'me': me, 'key': key}
+    data = {'tracks': tracks, 'audio_features': audio_features, 'me': me, 'key': key, 'token': flask_dance.contrib.spotify.spotify.token}
     with open(filename, 'w') as f:
         json.dump(data, f)
 
