@@ -2,3 +2,4 @@ flask
 Flask-Dance
 spotipy
 flask-bootstrap
+gunicorn
